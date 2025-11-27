@@ -2,84 +2,1135 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Vulka</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">NDK Coffee - Идеальный Кофе</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style id="theme-style">
+        /* =========================================================
+           ОСНОВНЫЕ СТИЛИ (FeedUp Style - Красно-Черный)
+           ========================================================= */
+        :root {
+            --main-red: #C52E2E; /* Яркий красный акцент */
+            --dark-bg: #1A1A1A; /* Темный фон */
+            --light-bg: #2C2C2C; /* Фон секций в темной теме */
+            --white: #ffffff;
+            --text-color: var(--white);
+            --bg-color: var(--dark-bg);
+            --header-bg: #101010; /* Очень темный хедер */
+            --header-text: var(--white);
+            --hero-bg: var(--dark-bg);
+            --red-glow: 0 0 10px rgba(197, 46, 46, 0.8);
+            --shadow-dark: 0 4px 12px rgba(0, 0, 0, 0.5);
+            --border-radius: 8px;
+        }
+
+        /* Светлая тема (Light Theme - сохраняем, но делаем контрастной) */
+        body.light-theme {
+            --text-color: #1A1A1A;
+            --bg-color: #F5F5F5;
+            --light-bg: #FFFFFF;
+            --dark-bg: #EAEAEA;
+            --header-bg: #C52E2E;
+            --header-text: var(--white);
+            --hero-bg: #C52E2E;
+        }
+        
+        /* Применение переменных */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* HEADER & NAVIGATION (Чистый, как FeedUp) */
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 15px 0;
+            box-shadow: var(--shadow-dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo a {
+            color: var(--header-text);
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 1.6em;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            width: 35px; 
+            height: 35px;
+            margin-right: 10px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--main-red);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            color: var(--header-text);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            transition: all 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            background-color: var(--main-red);
+            box-shadow: var(--red-glow);
+        }
+
+        /* Кнопки управления (язык/тема) */
+        .control-buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 20px;
+        }
+        .control-buttons button {
+            background-color: var(--light-bg);
+            border: none;
+            color: var(--header-text);
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+        .control-buttons button:hover {
+            background-color: var(--main-red);
+        }
+        
+        /* HERO SECTION */
+        .hero {
+            background-color: var(--hero-bg);
+            color: var(--white);
+            padding: 100px 0;
+            text-align: left;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .hero-text {
+            max-width: 50%;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            color: var(--main-red);
+        }
+
+        .hero-image {
+            max-width: 45%;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-dark);
+            transition: transform 0.4s ease;
+        }
+
+        .hero-image img {
+            width: 100%;
+            display: block;
+        }
+        
+        /* Кнопка ОНЛАЙН ЗАКАЗ */
+        .btn-order-now {
+            background-color: var(--main-red);
+            color: var(--white);
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05em;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-order-now:hover {
+            background-color: #A32B2B; 
+            box-shadow: var(--red-glow); 
+            transform: scale(1.02);
+        }
+
+        /* SECTIONS & TITLES */
+        section {
+            padding: 60px 0;
+            text-align: center;
+            background-color: var(--light-bg);
+            margin-top: 20px;
+            border-radius: var(--border-radius);
+        }
+
+        .container > h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: var(--main-red);
+        }
+        
+        /* PRODUCT GRID */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .product-card {
+            background-color: var(--dark-bg);
+            color: var(--white);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-dark);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: left;
+            cursor: pointer;
+            border: 1px solid rgba(197, 46, 46, 0.2);
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8), var(--red-glow);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 15px;
+        }
+
+        .product-info h3 {
+            color: var(--main-red);
+            margin-bottom: 5px;
+        }
+        
+        /* FOOTER */
+        footer {
+            background-color: var(--header-bg);
+            color: var(--white);
+            padding: 30px 0;
+            margin-top: 20px;
+            border-radius: var(--border-radius);
+        }
+
+        /* МОДАЛЬНЫЕ ОКНА И ФОРМЫ */
+        .modal {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+        .modal-content {
+            background-color: var(--dark-bg);
+            border: 2px solid var(--main-red);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            color: var(--white);
+        }
+        .modal-content input, .modal-content select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background-color: #333;
+            color: var(--white);
+            transition: border-color 0.3s;
+        }
+        .modal-content input:focus, .modal-content select:focus {
+            border-color: var(--main-red);
+            outline: none;
+            box-shadow: var(--red-glow);
+        }
+        .modal-content button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 4px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .modal-content button[type="submit"] {
+            background-color: var(--main-red);
+            color: var(--white);
+        }
+        .modal-content button[type="submit"]:hover {
+            background-color: #A32B2B;
+        }
+        
+        .file-upload-wrapper {
+            margin: 15px 0;
+            border: 1px dashed #666;
+            border-radius: 4px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #333;
+            transition: background-color 0.3s;
+        }
+
+        .file-upload-wrapper:hover {
+            background-color: #444;
+        }
+        .file-upload-label {
+            display: block;
+            color: #ccc;
+        }
+        #product-image-file {
+            display: none;
+        }
+
+        /* АДАПТИВНОСТЬ (СОВМЕСТИМОСТЬ С ТЕЛЕФОНАМИ) */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                position: relative;
+            }
+
+            .logo {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            nav {
+                margin-left: 0;
+                width: 100%;
+                order: 2;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 10px 0;
+                padding-bottom: 10px;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                padding-top: 10px;
+            }
+            
+            .nav-links li {
+                width: 48%; 
+                margin: 0;
+            }
+            
+            .nav-links a {
+                padding: 10px 5px;
+                text-align: center;
+                display: block;
+            }
+            
+            .control-buttons {
+                position: absolute;
+                top: 15px;
+                right: 20px;
+                margin-left: 0;
+                order: 1;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text, .hero-image {
+                max-width: 100%;
+            }
+
+            .hero-text h1 {
+                font-size: 2em;
+            }
+            
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .modal-content {
+                width: 90%;
+                margin: 10% auto;
+            }
+        }
+    </style>
 </head>
-<body>
-    <div class="main-content">
-        <div class="language-dropdown-container">
-            <button class="language-toggle-btn" data-lang-key="langButton">RU</button>
-            <div class="language-dropdown-content">
-                <a href="#" data-lang="ru">Русский</a>
-                <a href="#" data-lang="en">English</a>
+<body class="light-theme">
+    <header>
+        <div class="container navbar">
+            <div class="logo">
+                <a href="#hero">
+                    <img src="assets/logo.png" alt="NDK Coffee Logo" class="logo-img"> 
+                    NDK COFFEE
+                </a>
             </div>
-        </div>
-
-        <div class="header">
-            <h1 class="main-title">Vulka</h1>
-            <p class="subtitle" data-lang-key="subtitle">Сайт студии Vulka</p>
-        </div>
-    
-        <div class="about-section">
-            <div class="about-avatar"></div>
-            <div class="about-text">
-                <h2 data-lang-key="aboutTitle">О СТУДИИ:</h2>
-                <p data-lang-key="aboutText">Мы - Vulka, это студия, занимающаяся созданием анимационных проектов и игр.</p>
+            
+            <div class="control-buttons">
+                <button id="lang-toggle-btn" data-lang="lang-toggle">UZ</button>
+                <button id="theme-toggle-btn" data-lang="theme-toggle">☀️</button>
             </div>
+            
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#menu" data-lang="menu-link">МЕНЮ</a></li>
+                    <li><a href="#filials" data-lang="filials-link">ФИЛИАЛЫ</a></li>
+                    <li><a href="#about" data-lang="about-link">О НАС</a></li>
+                    <li><a href="#" id="user-auth-display" data-lang="auth-link">ВХОД / РЕГ</a></li> 
+                    <li><a href="#" id="admin-link" data-lang="admin-link">АДМИН</a></li>
+                </ul>
+            </nav>
         </div>
+    </header>
 
-        <div class="category-menu">
-            <button class="category-btn active" data-category="games" data-lang-key="gamesBtn">Наши Проекты</button>
-            <button class="category-btn" data-category="social" data-lang-key="socialBtn">Социальные Сети</button>
-        </div>
-
-        <div class="category-content active" id="games">
-            <div class="game-container">
-                <div class="game-card">
-                    <div class="game-media-wrapper">
-                        <div class="game-media-container">
-                            <img src="image/utopia.png" alt="Utopia Game" class="game-image">
-                            <video class="game-video" loop>
-                                <source src="videos/utopia.mp4" type="video/mp4">
-                            </video>
-                            <button class="play-button">▶</button>
-                        </div>
-                    </div>
-                    <div class="game-info">
-                        <h3 data-lang-key="gameTitle">Utopia</h3>
-                        <p data-lang-key="gameDesc">Кооперативная хоррор-игра, где вы и ваши друзья попадаете в опасный мир, полный загадок и ловушек.</p>
-                        <a href="#" class="download-btn" data-lang-key="steamBtn">
-                            <i class="fab fa-steam"></i> Steam
-                        </a>
-                    </div>
+    <main class="container">
+        <section id="hero" class="hero">
+            <div class="container hero-content">
+                <div class="hero-text">
+                    <h1 id="hero-title" data-lang="hero-title">СОЗДАЙТЕ ИДЕАЛЬНЫЙ КОФЕ</h1>
+                    <p id="hero-subtitle" data-lang="hero-subtitle">Начните свой день с чашки, которая вдохновляет.</p>
+                    <button class="btn-order-now" data-lang="order-btn" onclick="document.getElementById('auth-modal').style.display='block'; showLoginView();">
+                        ОНЛАЙН ЗАКАЗ
+                    </button>
+                </div>
+                <div class="hero-image">
+                    <img src="assets/hero_main.jpg" alt="Идеальный кофе NDK Coffee">
                 </div>
             </div>
-        </div>
+        </section>
 
-        <div class="category-content" id="social">
-            <div class="social-links-grid">
-                <a href="https://discord.gg/VREAyGDBKt" target="_blank" class="social-btn discord">
-                    <i class="fab fa-discord"></i>
-                    <span data-lang-key="discord">Дискорд</span>
+        <section id="menu" class="menu-section">
+            <h2 data-lang="menu-title">НАШЕ МЕНЮ</h2>
+            <div id="product-list" class="product-grid">
+                </div>
+        </section>
+        
+        <section id="filials" class="filials-section">
+            <h2 data-lang="filials-title">НАШИ ФИЛИАЛЫ</h2>
+            <div id="filial-grid" class="product-grid">
+                </div>
+        </section>
+        
+        <section id="about" class="about-section">
+            <h2 data-lang="about-title">О НАС</h2>
+            <p data-lang="about-text">NDK Coffee — это больше, чем просто кофейня. Это место, где каждое зерно отбирается с любовью, а каждая чашка наполняется вдохновением.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <img src="assets/logo.png" alt="NDK Coffee Logo" class="logo-img">
+                <p>NDK COFFEE</p>
+            </div>
+            <div class="footer-social">
+                <a href="https://www.instagram.com/" target="_blank" aria-label="Instagram" class="social-icon-wrapper">
+                    <img src="assets/insta_icon.png" alt="Instagram" class="social-icon">
                 </a>
-                <a href="https://t.me/VulkaOfficial" target="_blank" class="social-btn telegram">
-                    <i class="fab fa-telegram-plane"></i>
-                    <span data-lang-key="telegram">Телеграм</span>
+                <a href="https://t.me/" target="_blank" aria-label="Telegram" class="social-icon-wrapper">
+                    <img src="assets/tg_icon.png" alt="Telegram" class="social-icon">
                 </a>
-                <a href="https://www.youtube.com/@VulkaOfficial" target="_blank" class="social-btn youtube">
-                    <i class="fab fa-youtube"></i>
-                    <span data-lang-key="youtube">Ютуб</span>
+                <a href="https://www.youtube.com/" target="_blank" aria-label="YouTube" class="social-icon-wrapper">
+                    <img src="assets/yt_icon.png" alt="YouTube" class="social-icon">
                 </a>
-                <a href="https://www.instagram.com/VulkaOfficial/" target="_blank" class="social-btn instagram">
-                    <i class="fab fa-instagram"></i>
-                    <span data-lang-key="instagram">Инстаграм</span>
-                </a>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2023 NDK Coffee. <span data-lang="copyright">Все права защищены.</span></p>
+    </footer>
+    
+    <div id="auth-modal" class="modal" style="display:none; position: fixed; z-index: 101; left: 0; top: 0; width: 100%; height: 100%; overflow: auto;">
+        <div class="modal-content" style="width: 400px; margin: 15% auto;">
+            <span class="close-button" onclick="closeModal('auth-modal')" style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+            <div id="login-view">
+                <h2 data-lang="login-title" style="color: var(--main-red);">Вход</h2>
+                <form id="login-user-form">
+                    <input type="text" id="login-user-email" placeholder="Email" required>
+                    <input type="password" id="login-user-password" placeholder="Пароль" required>
+                    <button type="submit" data-lang="login-btn">Войти</button>
+                    <button type="button" onclick="showRegisterView()" data-lang="no-account-btn" style="background-color: #333; color: #fff;">Нет аккаунта? Зарегистрироваться</button>
+                </form>
+            </div>
+            <div id="register-view" style="display: none;">
+                <h2 data-lang="register-title" style="color: var(--main-red);">Регистрация</h2>
+                <form id="register-user-form">
+                    <input type="text" id="register-user-email" placeholder="Email" required>
+                    <input type="text" id="register-user-nick" placeholder="Ник (Обязательно)" required>
+                    <input type="tel" id="register-user-phone" placeholder="Номер телефона (+998XXXXXXXXX)" pattern="^\+?[0-9]{9,15}$" title="Формат: +998... (9-15 цифр)" required>
+                    <input type="password" id="register-user-password" placeholder="Пароль" required>
+                    <button type="submit" data-lang="register-btn">Зарегистрироваться</button>
+                    <button type="button" onclick="showLoginView()" data-lang="has-account-btn" style="background-color: #333; color: #fff;">Уже есть аккаунт? Войти</button>
+                </form>
             </div>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <div id="admin-modal" class="modal" style="display:none; position: fixed; z-index: 101; left: 0; top: 0; width: 100%; height: 100%; overflow: auto;">
+        <div class="modal-content" style="width: 400px; margin: 15% auto;">
+            <span class="close-button" onclick="closeModal('admin-modal')" style="float: right; font-size: 28px; font-weight: bold; cursor: pointer;">&times;</span>
+            <div id="admin-auth-view">
+                <h2 data-lang="admin-login-title" style="color: var(--main-red);">Вход Администратора</h2>
+                <form id="login-admin-form">
+                    <input type="password" id="login-admin-key" placeholder="Секретный ключ" required>
+                    <button type="submit" data-lang="admin-login-btn">Войти как Администратор</button>
+                    <p class="admin-hint" data-lang="admin-hint" style="color: #777; margin-top: 10px;">Ключ: 12345</p>
+                </form>
+            </div>
+
+            <div id="management-view" style="display: none;">
+                <h2 data-lang="admin-panel-title" style="color: var(--main-red);">Панель Управления</h2>
+                <div class="menu-categories" style="margin: 20px 0; display: flex; gap: 10px;">
+                    <button class="btn-order-now" style="width: 50%;" onclick="showProductManager()" data-lang="manager-products">Товары</button>
+                    <button class="btn-order-now" style="width: 50%;" onclick="showFilialManager()" data-lang="manager-filials">Филиалы</button>
+                </div>
+                
+                <div id="product-manager" style="display: block;">
+                    <button onclick="showProductForm()" class="btn-order-now" style="width: 100%; margin-top: 10px; font-size: 1em; background-color: #007bff;">Добавить Новый Товар</button>
+                    <div id="admin-product-list" style="max-height: 250px; overflow-y: auto; padding: 10px; margin-top: 10px; border: 1px solid #444; border-radius: 4px;"></div>
+                </div>
+                
+                <div id="filial-manager" style="display: none;">
+                    <button onclick="showFilialForm()" class="btn-order-now" style="width: 100%; margin-top: 10px; font-size: 1em; background-color: #007bff;">Добавить Новый Филиал</button>
+                    <div id="admin-filial-list" style="max-height: 250px; overflow-y: auto; padding: 10px; margin-top: 10px; border: 1px solid #444; border-radius: 4px;"></div>
+                </div>
+                
+                <button onclick="logoutAdmin()" class="btn-order-now" style="margin-top: 20px; background-color: #ff3333; width: 100%;">Выйти из Админки</button>
+            </div>
+
+            <form id="product-form" style="display: none;">
+                <h3 data-lang="product-form-title" style="color: var(--main-red);">Добавление/Редактирование Товара</h3>
+                <input type="hidden" id="product-id">
+                <input type="text" id="product-name" placeholder="Название товара" required>
+                <input type="number" id="product-price" placeholder="Цена (руб.)" required min="0.01" step="0.01">
+                <select id="product-category" required data-lang="select-category">
+                    <option value="" disabled selected data-lang="select-category-default">-- Выберите категорию --</option>
+                    <option value="combo" data-lang="cat-combo">Комбо</option>
+                    <option value="coffee" data-lang="cat-coffee">Кофе</option>
+                    <option value="hotdogs" data-lang="cat-hotdogs">Хот Доги</option>
+                    <option value="pizza" data-lang="cat-pizza">Пицца</option>
+                </select>
+                
+                <div class="file-upload-wrapper">
+                    <input type="file" id="product-image-file" accept="image/png, image/jpeg">
+                    <label for="product-image-file" class="file-upload-label" id="file-label" data-lang="file-upload-label">
+                        Нажмите, чтобы выбрать изображение (.png/.jpg)
+                    </label>
+                </div>
+                <input type="hidden" id="product-image-data-url">
+
+                <button type="submit" data-lang="save-product-btn">Сохранить Товар</button>
+                <button type="button" onclick="hideProductForm()" style="background-color: #6c757d;" data-lang="cancel-btn">Отмена</button>
+            </form>
+            
+            <form id="filial-form" style="display: none;">
+                <h3 data-lang="filial-form-title" style="color: var(--main-red);">Добавление/Редактирование Филиала</h3>
+                <input type="hidden" id="filial-id">
+                <input type="text" id="filial-name" placeholder="Название филиала (Центральный)" required>
+                <input type="text" id="filial-address" placeholder="Адрес (ул. Главная, 10)" required>
+                <input type="text" id="filial-img" placeholder="URL изображения (assets/filial_1.jpg)" required>
+
+                <button type="submit" data-lang="save-filial-btn">Сохранить Филиал</button>
+                <button type="button" onclick="hideFilialForm()" style="background-color: #6c757d;" data-lang="cancel-btn">Отмена</button>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        // =========================================================
+        // JAVASCRIPT: ФУНКЦИОНАЛ (Полностью исправлен и восстановлен)
+        // =========================================================
+        
+        const ADMIN_KEY = '12345';
+        const PRODUCTS_STORAGE_KEY = 'ndk_products';
+        const USERS_STORAGE_KEY = 'ndk_users';
+        const FILIALS_STORAGE_KEY = 'ndk_filials';
+        const CURRENT_LANG_KEY = 'current_lang';
+        const CURRENT_THEME_KEY = 'current_theme';
+
+        // DOM Elements
+        const authModal = document.getElementById('auth-modal');
+        const adminModal = document.getElementById('admin-modal');
+        const authLinkDisplay = document.getElementById('user-auth-display');
+        const heroTitle = document.getElementById('hero-title');
+        const heroSubtitle = document.getElementById('hero-subtitle');
+        const productCategorySelect = document.getElementById('product-category');
+        const langToggleBtn = document.getElementById('lang-toggle-btn');
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const body = document.body;
+        
+        // Forms
+        const registerUserForm = document.getElementById('register-user-form');
+        const loginUserForm = document.getElementById('login-user-form');
+        const loginAdminForm = document.getElementById('login-admin-form');
+        const productForm = document.getElementById('product-form');
+        const filialForm = document.getElementById('filial-form');
+
+        // Containers
+        const productListContainer = document.getElementById('product-list');
+        const adminProductList = document.getElementById('admin-product-list');
+        const filialGridContainer = document.getElementById('filial-grid');
+        const adminFilialList = document.getElementById('admin-filial-list');
+        const adminProductManager = document.getElementById('product-manager');
+        const adminFilialManager = document.getElementById('filial-manager');
+        const fileLabel = document.getElementById('file-label');
+        const productDataUrlInput = document.getElementById('product-image-data-url');
+        const productImageFile = document.getElementById('product-image-file');
+        
+        // =========================================================
+        // УТИЛИТЫ LOCALSTORAGE & ID
+        // =========================================================
+
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substring(2);
+        }
+
+        function getData(key) {
+            const dataJson = localStorage.getItem(key);
+            return dataJson ? JSON.parse(dataJson) : [];
+        }
+
+        function saveData(key, data) {
+            localStorage.setItem(key, JSON.stringify(data));
+        }
+
+        // =========================================================
+        // ПЕРЕВОДЫ
+        // =========================================================
+
+        const translations = {
+            'ru': {
+                'page-title': 'NDK Coffee - Идеальный Кофе',
+                'menu-link': 'МЕНЮ', 'filials-link': 'ФИЛИАЛЫ', 'about-link': 'О НАС', 'auth-link': 'ВХОД / РЕГ', 'admin-link': 'АДМИН', 
+                'lang-toggle': 'UZ', 'theme-toggle': '☀️',
+                'hero-title': 'СОЗДАЙТЕ ИДЕАЛЬНЫЙ КОФЕ', 'hero-subtitle': 'Начните свой день с чашки, которая вдохновляет.', 'hero-title-logged': 'БЫСТРЫЙ ПЕРЕКУС!', 'hero-subtitle-logged': 'Специальные предложения для Вас.', 'order-btn': 'ОНЛАЙН ЗАКАЗ',
+                'menu-title': 'НАШЕ МЕНЮ', 'filials-title': 'НАШИ ФИЛИАЛЫ', 'about-title': 'О НАС', 'about-text': 'NDK Coffee — это больше, чем просто кофейня. Это место, где каждое зерно отбирается с любовью, а каждая чашка наполняется вдохновением.',
+                'copyright': 'Все права защищены.',
+                'login-title': 'Вход', 'register-title': 'Регистрация', 'login-btn': 'Войти', 'no-account-btn': 'Нет аккаунта? Зарегистрироваться', 'has-account-btn': 'Уже есть аккаунт? Войти', 'register-btn': 'Зарегистрироваться',
+                'admin-login-title': 'Вход Администратора', 'admin-login-btn': 'Войти как Администратор', 'admin-hint': 'Ключ: 12345',
+                'manager-products': 'Товары', 'manager-filials': 'Филиалы', 'admin-panel-title': 'Панель Управления', 'logout-admin-btn': 'Выйти из Админки',
+                'add-product-btn': 'Добавить Новый Товар', 'add-filial-btn': 'Добавить Новый Филиал',
+                'product-form-title': 'Добавление/Редактирование Товара', 'filial-form-title': 'Добавление/Редактирование Филиала',
+                'select-category-default': '-- Выберите категорию --', 'cat-combo': 'Комбо', 'cat-coffee': 'Кофе', 'cat-hotdogs': 'Хот Доги', 'cat-pizza': 'Пицца',
+                'file-upload-label': 'Нажмите, чтобы выбрать изображение (.png/.jpg)', 'save-product-btn': 'Сохранить Товар', 'save-filial-btn': 'Сохранить Филиал', 'cancel-btn': 'Отмена',
+                'product-edit-btn': 'Редактировать', 'product-delete-btn': 'Удалить', 'filial-edit-btn': 'Редактировать', 'filial-delete-btn': 'Удалить',
+            },
+            'uz': {
+                'page-title': 'NDK Coffee - Ideal Qahva',
+                'menu-link': 'MENYU', 'filials-link': 'FILIALLAR', 'about-link': 'BIZ HAQIMIZDA', 'auth-link': 'KIRISH / ROʻYXAT', 'admin-link': 'ADMIN',
+                'lang-toggle': 'RU', 'theme-toggle': '☀️',
+                'hero-title': 'IDEAL QAHVANI YARATING', 'hero-subtitle': 'Kuningizni ilhomlantiruvchi kofe bilan boshlang.', 'hero-title-logged': 'TEZ OVQAT!', 'hero-subtitle-logged': 'Siz uchun maxsus takliflar.', 'order-btn': 'ONLAYN BUYURTMA',
+                'menu-title': 'BIZNING MENYU', 'filials-title': 'FILIALLARIMIZ', 'about-title': 'BIZ HAQIMIZDA', 'about-text': 'NDK Coffee – bu shunchaki qahvaxonadan koʻra koʻproq narsa. Bu yerda har bir don sevgi bilan tanlanadi va har bir chashka ilhom bilan toʻldiriladi.',
+                'copyright': 'Barcha huquqlar himoyalangan.',
+                'login-title': 'Kirish', 'register-title': 'Roʻyxatdan oʻtish', 'login-btn': 'Kirish', 'no-account-btn': 'Profilingiz yoʻqmi? Roʻyxatdan oʻting', 'has-account-btn': 'Profilingiz bormi? Kiring', 'register-btn': 'Roʻyxatdan oʻtish',
+                'admin-login-title': 'Administrator Kirishi', 'admin-login-btn': 'Administrator sifatida kirish', 'admin-hint': 'Kalit: 12345',
+                'manager-products': 'Mahsulotlar', 'manager-filials': 'Filiallar', 'admin-panel-title': 'Boshqaruv Paneli', 'logout-admin-btn': 'Adminkadan chiqish',
+                'add-product-btn': 'Yangi Mahsulot Qoʻshish', 'add-filial-btn': 'Yangi Filial Qoʻshish',
+                'product-form-title': 'Mahsulot qoʻshish/tahrirlash', 'filial-form-title': 'Filial qoʻshish/tahrirlash',
+                'select-category-default': '-- Kategoriyani tanlang --', 'cat-combo': 'Kombo', 'cat-coffee': 'Qahva', 'cat-hotdogs': 'Xot Doglar', 'cat-pizza': 'Pitsa',
+                'file-upload-label': 'Rasm tanlash uchun bosing (.png/.jpg)', 'save-product-btn': 'Mahsulotni saqlash', 'save-filial-btn': 'Filialni saqlash', 'cancel-btn': 'Bekor qilish',
+                'product-edit-btn': 'Tahrirlash', 'product-delete-btn': 'Oʻchirish', 'filial-edit-btn': 'Tahrirlash', 'filial-delete-btn': 'Oʻchirish',
+            }
+        };
+
+        function getCategoryLabel(categoryKey, lang) {
+            return translations[lang][`cat-${categoryKey}`] || categoryKey;
+        }
+
+        function setLanguage(lang) {
+            const elements = document.querySelectorAll('[data-lang]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-lang');
+                if (translations[lang] && translations[lang][key]) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'OPTION') {
+                        if (el.placeholder) el.placeholder = translations[lang][key];
+                        if (el.tagName === 'OPTION') el.textContent = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+            document.getElementById('page-title').textContent = translations[lang]['page-title'];
+            langToggleBtn.textContent = translations[lang]['lang-toggle'];
+            localStorage.setItem(CURRENT_LANG_KEY, lang);
+            
+            // Re-render views with new language
+            updateUserDisplay(lang);
+            renderPublicMenu(lang);
+            renderPublicFilials(lang);
+            if (document.getElementById('management-view').style.display === 'block') {
+                 // Перерисовка текущего менеджера для обновления текста
+                if (adminProductManager.style.display === 'block') renderAdminProductList();
+                else if (adminFilialManager.style.display === 'block') renderAdminFilialList();
+            }
+        }
+
+        langToggleBtn.addEventListener('click', () => {
+            const currentLang = localStorage.getItem(CURRENT_LANG_KEY) || 'ru';
+            const newLang = currentLang === 'ru' ? 'uz' : 'ru';
+            setLanguage(newLang);
+        });
+
+        function setTheme(theme) {
+            body.className = theme === 'dark' ? 'dark-theme' : 'light-theme';
+            themeToggleBtn.textContent = theme === 'dark' ? '🌙' : '☀️';
+            localStorage.setItem(CURRENT_THEME_KEY, theme);
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = localStorage.getItem(CURRENT_THEME_KEY) || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            setTheme(newTheme);
+        });
+
+        // =========================================================
+        // АУТЕНТИФИКАЦИЯ (ПОЛЬЗОВАТЕЛЬ)
+        // =========================================================
+        
+        function getCurrentUser() {
+            const userJson = localStorage.getItem('currentUser');
+            return userJson ? JSON.parse(userJson) : null;
+        }
+
+        function updateUserDisplay(lang) {
+            const user = getCurrentUser();
+            const currentLang = lang || localStorage.getItem(CURRENT_LANG_KEY) || 'ru';
+
+            if (user && user.phone) {
+                // Пользователь вошел, показываем номер
+                authLinkDisplay.textContent = user.phone;
+                authLinkDisplay.onclick = logoutUser;
+                
+                // Изменяем главный текст на "БЫСТРЫЙ ПЕРЕКУС!"
+                heroTitle.textContent = translations[currentLang]['hero-title-logged'];
+                heroSubtitle.textContent = translations[currentLang]['hero-subtitle-logged'];
+
+            } else {
+                // Пользователь не вошел
+                authLinkDisplay.textContent = translations[currentLang]['auth-link'];
+                authLinkDisplay.onclick = function(e) { e.preventDefault(); showLoginView(); document.getElementById('auth-modal').style.display = 'block'; };
+                
+                // Возвращаем стандартный главный текст
+                heroTitle.textContent = translations[currentLang]['hero-title'];
+                heroSubtitle.textContent = translations[currentLang]['hero-subtitle'];
+            }
+        }
+
+        function logoutUser(e) {
+            e.preventDefault();
+            localStorage.removeItem('currentUser');
+            updateUserDisplay();
+            alert('Вы вышли из системы.');
+        }
+        
+        // Модальные окна
+        function closeModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+        function showLoginView() {
+            document.getElementById('login-view').style.display = 'block';
+            document.getElementById('register-view').style.display = 'none';
+            document.getElementById('login-user-form').reset();
+        }
+
+        function showRegisterView() {
+            document.getElementById('login-view').style.display = 'none';
+            document.getElementById('register-view').style.display = 'block';
+            document.getElementById('register-user-form').reset();
+        }
+
+        // Обработчик Регистрации
+        registerUserForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('register-user-email').value;
+            const nick = document.getElementById('register-user-nick').value;
+            const phone = document.getElementById('register-user-phone').value;
+            const password = document.getElementById('register-user-password').value;
+            let users = getData(USERS_STORAGE_KEY);
+
+            if (users.find(u => u.email === email)) {
+                alert('Пользователь с таким email уже зарегистрирован!');
+                return;
+            }
+
+            users.push({ id: generateId(), email, nick, phone, password, role: 'user' });
+            saveData(USERS_STORAGE_KEY, users);
+            alert(`Регистрация ${nick} успешна! Теперь Вы можете войти.`);
+            showLoginView();
+        });
+
+        // Обработчик Входа
+        loginUserForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('login-user-email').value;
+            const password = document.getElementById('login-user-password').value;
+            const users = getData(USERS_STORAGE_KEY);
+            const user = users.find(u => u.email === email && u.password === password);
+
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify({ id: user.id, email: user.email, nick: user.nick, phone: user.phone }));
+                alert(`Добро пожаловать, ${user.nick}!`);
+                closeModal('auth-modal');
+                updateUserDisplay(); 
+            } else {
+                alert('Неверный email или пароль.');
+            }
+        });
+
+        // =========================================================
+        // АУТЕНТИФИКАЦИЯ (АДМИН)
+        // =========================================================
+
+        function checkAdminStatus() {
+            return localStorage.getItem('isAdmin') === 'true';
+        }
+        
+        loginAdminForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const key = document.getElementById('login-admin-key').value;
+            if (key === ADMIN_KEY) {
+                localStorage.setItem('isAdmin', 'true');
+                document.getElementById('admin-auth-view').style.display = 'none';
+                document.getElementById('management-view').style.display = 'block';
+                showProductManager(); // Показываем товары по умолчанию
+                alert('Вход как Администратор успешен!');
+                // Закрытие модального окна происходит позже в логике
+            } else {
+                alert('Неверный секретный ключ.');
+            }
+        });
+        
+        document.getElementById('admin-link').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (checkAdminStatus()) {
+                document.getElementById('admin-auth-view').style.display = 'none';
+                document.getElementById('management-view').style.display = 'block';
+                showProductManager(); // Обновляем данные перед открытием
+            } else {
+                document.getElementById('admin-auth-view').style.display = 'block';
+                document.getElementById('management-view').style.display = 'none';
+            }
+            adminModal.style.display = 'block';
+        });
+
+        function logoutAdmin() {
+            localStorage.removeItem('isAdmin');
+            document.getElementById('admin-auth-view').style.display = 'block';
+            document.getElementById('management-view').style.display = 'none';
+            document.getElementById('login-admin-form').reset();
+            alert('Вы вышли из админ-панели.');
+        }
+
+        // =========================================================
+        // МЕНЕДЖЕР ТОВАРОВ (CRUD)
+        // =========================================================
+        
+        function showProductManager() {
+            document.getElementById('product-manager').style.display = 'block';
+            document.getElementById('filial-manager').style.display = 'none';
+            renderAdminProductList();
+        }
+        
+        function renderPublicMenu(lang) {
+            const products = getData(PRODUCTS_STORAGE_KEY);
+            const currentLang = lang || localStorage.getItem(CURRENT_LANG_KEY) || 'ru';
+            
+            productListContainer.innerHTML = products.map(product => `
+                <div class="product-card" data-category="${product.category}">
+                    <img src="${product.imageUrl}" alt="${product.name}">
+                    <div class="product-info">
+                        <p style="font-size: 0.8em; opacity: 0.7;">${getCategoryLabel(product.category, currentLang)}</p>
+                        <h3>${product.name}</h3>
+                        <p>${product.price.toFixed(2)} ₽</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderAdminProductList() {
+            const products = getData(PRODUCTS_STORAGE_KEY);
+            const currentLang = localStorage.getItem(CURRENT_LANG_KEY) || 'ru';
+            adminProductList.innerHTML = products.map(product => `
+                <div class="product-item" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #444;">
+                    <span style="font-size: 0.9em; flex-grow: 1;">${product.name} (${product.price.toFixed(2)} ₽) [${getCategoryLabel(product.category, currentLang)}]</span>
+                    <div>
+                        <button class="admin-action-btn" onclick="editProduct('${product.id}')" style="background-color: #007bff; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; margin-right: 5px; cursor: pointer;">${translations[currentLang]['product-edit-btn']}</button>
+                        <button class="admin-action-btn" onclick="deleteProduct('${product.id}')" style="background-color: #dc3545; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">${translations[currentLang]['product-delete-btn']}</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showProductForm(productId = null) {
+            if (!checkAdminStatus()) return;
+            document.getElementById('management-view').style.display = 'none';
+            productForm.style.display = 'block';
+            document.getElementById('product-id').value = productId || '';
+            productImageFile.value = '';
+            productDataUrlInput.value = ''; 
+            
+            const currentLang = localStorage.getItem(CURRENT_LANG_KEY) || 'ru';
+            fileLabel.textContent = translations[currentLang]['file-upload-label'];
+
+            if (productId) {
+                const product = getData(PRODUCTS_STORAGE_KEY).find(p => p.id === productId);
+                if (product) {
+                    document.getElementById('product-name').value = product.name;
+                    document.getElementById('product-price').value = product.price;
+                    productCategorySelect.value = product.category;
+                    productDataUrlInput.value = product.imageUrl; 
+                    fileLabel.textContent = currentLang === 'ru' ? 'Изображение сохранено (выберите новый файл для замены)' : 'Rasm saqlangan (almashtirish uchun yangi faylni tanlang)';
+                }
+            } else {
+                productForm.reset();
+            }
+        }
+        
+        function hideProductForm() {
+            document.getElementById('management-view').style.display = 'block';
+            productForm.style.display = 'none';
+        }
+        
+        function editProduct(productId) { showProductForm(productId); }
+
+        function deleteProduct(productId) { 
+            if (!checkAdminStatus() || !confirm("Удалить товар?")) return;
+            let products = getData(PRODUCTS_STORAGE_KEY);
+            products = products.filter(p => p.id !== productId);
+            saveData(PRODUCTS_STORAGE_KEY, products);
+            renderAdminProductList();
+            renderPublicMenu();
+        }
+        
+        // Обработчик формы товаров
+        productForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!checkAdminStatus()) return;
+            
+            const id = document.getElementById('product-id').value;
+            const name = document.getElementById('product-name').value;
+            const price = parseFloat(document.getElementById('product-price').value);
+            const category = productCategorySelect.value;
+            const imageUrl = productDataUrlInput.value; 
+
+            if (!name || isNaN(price) || !category || !imageUrl) {
+                alert("Пожалуйста, заполните все поля и выберите изображение.");
+                return;
+            }
+
+            let products = getData(PRODUCTS_STORAGE_KEY);
+            
+            if (id) {
+                const index = products.findIndex(p => p.id === id);
+                if (index !== -1) {
+                    products[index] = { id, name, price, category, imageUrl };
+                }
+            } else {
+                products.push({ id: generateId(), name, price, category, imageUrl });
+            }
+
+            saveData(PRODUCTS_STORAGE_KEY, products);
+            hideProductForm();
+            renderAdminProductList();
+            renderPublicMenu();
+        });
+        
+        // Обработчик загрузки файла (Base64)
+        productImageFile.addEventListener('change', function() {
+            const file = this.files[0];
+            const currentLang = localStorage.getItem(CURRENT_LANG_KEY) || 'ru';
+            
+            if (file) {
+                fileLabel.textContent = file.name;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    productDataUrlInput.value = e.target.result; 
+                    alert(currentLang === 'ru' ? 'Изображение успешно сконвертировано и готово к сохранению.' : 'Rasm muvaffaqiyatli konvertatsiya qilindi va saqlashga tayyor.');
+                };
+                reader.readAsDataURL(file);
+            } else {
+                fileLabel.textContent = translations[currentLang]['file-upload-label'];
+                productDataUrlInput.value = '';
+            }
+        });
+
+        // =========================================================
+        // МЕНЕДЖЕР ФИЛИАЛОВ (CRUD)
+        // =========================================================
+        
+        function showFilialManager() {
+            document.getElementById('product-manager').style.display = 'none';
+            document.getElementById('filial-manager').style.display = 'block';
+            renderAdminFilialList();
+        }
+
+        function renderPublicFilials(lang) {
+            const filials = getData(FILIALS_STORAGE_KEY);
+            filialGridContainer.innerHTML = filials.map(filial => `
+                <div class="product-card filial-card">
+                    <img src="${filial.imageUrl}" alt="Филиал ${filial.name}">
+                    <div class="product-info">
+                        <h3>${filial.name}</h3>
+                        <p>${filial.address}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function renderAdminFilialList() {
+            const filials = getData(FILIALS_STORAGE_KEY);
+            const currentLang = localStorage.getItem(CURRENT_LANG_KEY) || 'ru';
+            adminFilialList.innerHTML = filials.map(filial => `
+                <div class="product-item" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed #444;">
+                    <span style="font-size: 0.9em; flex-grow: 1;">${filial.name} (${filial.address})</span>
+                    <div>
+                        <button class="admin-action-btn" onclick="editFilial('${filial.id}')" style="background-color: #007bff; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; margin-right: 5px; cursor: pointer;">${translations[currentLang]['filial-edit-btn']}</button>
+                        <button class="admin-action-btn" onclick="deleteFilial('${filial.id}')" style="background-color: #dc3545; color: #fff; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer;">${translations[currentLang]['filial-delete-btn']}</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showFilialForm(filialId = null) {
+            if (!checkAdminStatus()) return;
+            document.getElementById('management-view').style.display = 'none';
+            document.getElementById('filial-form').style.display = 'block';
+            
+            document.getElementById('filial-id').value = filialId || '';
+
+            if (filialId) {
+                const filial = getData(FILIALS_STORAGE_KEY).find(f => f.id === filialId);
+                if (filial) {
+                    document.getElementById('filial-name').value = filial.name;
+                    document.getElementById('filial-address').value = filial.address;
+                    document.getElementById('filial-img').value = filial.imageUrl;
+                }
+            } else {
+                document.getElementById('filial-form').reset();
+            }
+        }
+
+        function hideFilialForm() {
+            document.getElementById('management-view').style.display = 'block';
+            document.getElementById('filial-form').style.display = 'none';
+        }
+
+        function editFilial(filialId) { showFilialForm(filialId); }
+
+        function deleteFilial(filialId) {
+            if (!checkAdminStatus() || !confirm("Удалить филиал?")) return;
+            let filials = getData(FILIALS_STORAGE_KEY);
+            filials = filials.filter(f => f.id !== filialId);
+            saveData(FILIALS_STORAGE_KEY, filials);
+            renderAdminFilialList();
+            renderPublicFilials();
+        }
+        
+        // Обработчик формы филиалов
+        filialForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!checkAdminStatus()) return;
+
+            const id = document.getElementById('filial-id').value;
+            const name = document.getElementById('filial-name').value;
+            const address = document.getElementById('filial-address').value;
+            const imageUrl = document.getElementById('filial-img').value;
+
+            if (!name || !address || !imageUrl) {
+                alert("Пожалуйста, заполните все поля филиала.");
+                return;
+            }
+
+            let filials = getData(FILIALS_STORAGE_KEY);
+            
+            if (id) {
+                const index = filials.findIndex(f => f.id === id);
+                if (index !== -1) {
+                    filials[index] = { id, name, address, imageUrl };
+                }
+            } else {
+                filials.push({ id: generateId(), name, address, imageUrl });
+            }
+
+            saveData(FILIALS_STORAGE_KEY, filials);
+            hideFilialForm();
+            renderAdminFilialList();
+            renderPublicFilials();
+        });
+
+
+        // =========================================================
+        // ИНИЦИАЛИЗАЦИЯ
+        // =========================================================
+
+        function initializeDefaultData() {
+            // Установка языка и темы по умолчанию или из LocalStorage
+            const savedLang = localStorage.getItem(CURRENT_LANG_KEY) || 'ru';
+            const savedTheme = localStorage.getItem(CURRENT_THEME_KEY) || 'dark'; // По умолчанию Dark, так как это ближе к FeedUp
+            setTheme(savedTheme);
+            setLanguage(savedLang); 
+            
+            if (getData(PRODUCTS_STORAGE_KEY).length === 0) {
+                saveData(PRODUCTS_STORAGE_KEY, [
+                    { id: generateId(), name: "Американо Комбо", price: 350.00, category: 'combo', imageUrl: "assets/кофе_1.png" },
+                    { id: generateId(), name: "Капучино", price: 280.00, category: 'coffee', imageUrl: "assets/кофе_2.png" },
+                ]);
+            }
+            if (getData(FILIALS_STORAGE_KEY).length === 0) {
+                saveData(FILIALS_STORAGE_KEY, [
+                    { id: generateId(), name: "Центральный", address: "ул. Главная, 10", imageUrl: "assets/gallery_1.jpg" },
+                    { id: generateId(), name: "Северный", address: "пр-т. Победы, 5", imageUrl: "assets/gallery_2.jpg" },
+                ]);
+            }
+
+            renderPublicMenu(savedLang);
+            renderPublicFilials(savedLang);
+        }
+
+        // Запуск при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeDefaultData();
+            updateUserDisplay(); 
+        });
+        
+    </script>
 </body>
 </html>
